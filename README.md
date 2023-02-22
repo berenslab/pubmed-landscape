@@ -16,7 +16,7 @@ As one runs the notebooks, the computed variables and intermediate results will 
 
 
 ## Installation
-To install the project package, one should call `pip install .` in the project root, i.e.:
+This project depends on Python ($\geq$ 3.7) and R ($\geq$ 4.0.0). The project script can be installed via `pip install .` in the project root, i.e.:
 ```
 git clone https://github.com/berenslab/pubmed-landscape
 cd pubmed-landscape
