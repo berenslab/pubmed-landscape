@@ -8,5 +8,5 @@ jupyter-black
 pygam
 transformers
 opentsne
-rpy
+rpy2
 torch
