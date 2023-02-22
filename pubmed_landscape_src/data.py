@@ -1,6 +1,7 @@
 import pandas as pd
 import xml.etree.ElementTree as et
 import os
+import torch
 
 def xml_import(xml_file):
     """Parses some elements of the metadata in PubMed XML files.
@@ -327,3 +328,38 @@ def import_all_files(path, order_files=False):
 
     final_df=pd.concat(frame_all_df,ignore_index=True)
     return final_df
+
+
+
+def generate_embeddings(abstracts):
+    '''Generate embeddings using BERT-based model.
+    This function was only tried with malteos model (SciNCL).
+    Code from Luca.
+    
+    Parameters
+    ----------
+    abstracts : list
+        Abstract texts.
+        
+    Returns
+    -------
+    embedding_cls : ndarray
+        [CLS] tokens of the abstracts.
+    embedding_sep : ndarray
+        [SEP] tokens of the abstracts.
+    embedding_av : ndarray
+        Average of tokens of the abstracts.
+    '''
+    
+    # preprocess the input
+    inputs = tokenizer(abstracts, padding=True, truncation=True, return_tensors="pt", max_length=512)
+
+    # inference
+    result = model(**inputs)
+
+    # take the first token ([CLS] token) in the batch as the embedding
+    embedding_cls = result.last_hidden_state[:,0,:].detach().numpy()
+    embedding_sep = result.last_hidden_state[:,-1,:].detach().numpy()
+    embedding_av = torch.mean(result.last_hidden_state, [1]).detach().numpy()
+    
+    return embedding_cls, embedding_sep, embedding_av 

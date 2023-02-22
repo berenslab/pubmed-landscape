@@ -49,6 +49,42 @@ def knn_accuracy(Zs, colors, k=10, subset_size=500, rs=42):
 
 
 
+
+def knn_accuracy_ls(selected_embeddings, true_labels, k = 10, rs=42):
+    """Calculates kNN accuracy.
+    In principle should do the same as the function above, but the way of selecting the train and test set is differently.
+    Code from Luca.
+    
+    Parameters
+    ----------
+    selected_embeddings : list 
+        List with the different datasets for which to calculate the kNN accuracy.
+    true_labels : array-like
+        Array with labels (colors).
+    k : int, default=10
+        Number of nearest neighbors to use.
+    rs : int, default=42
+        Random seed.
+    
+    Returns
+    -------
+    knn_accuracy : float
+        kNN accuracy of the dataset.
+    
+    """
+    
+    random_state = random.seed(rs)
+    
+    X_train, X_test, y_train, y_test = train_test_split(selected_embeddings, true_labels, test_size=0.01, random_state = random_state)
+    
+    knn = KNeighborsClassifier(n_neighbors=k, algorithm='brute', n_jobs=-1)
+    knn = knn.fit(X_train, y_train)
+    knn_accuracy = knn.score(X_test, y_test)
+    
+    return knn_accuracy
+
+
+
 # KNN recall
 
 def knn_recall(X, Zs, k=10, subset_size=None):
