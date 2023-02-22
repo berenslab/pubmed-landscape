@@ -5,6 +5,7 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.metrics import pairwise_distances
 from sklearn.metrics import mean_squared_error
 from sklearn.dummy import DummyClassifier
+from sklearn.model_selection import train_test_split
 
 
 # KNN accuracy
@@ -73,7 +74,7 @@ def knn_accuracy_ls(selected_embeddings, true_labels, k = 10, rs=42):
     
     """
     
-    random_state = random.seed(rs)
+    random_state = np.random.seed(rs)
     
     X_train, X_test, y_train, y_test = train_test_split(selected_embeddings, true_labels, test_size=0.01, random_state = random_state)
     

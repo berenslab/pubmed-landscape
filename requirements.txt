@@ -1,0 +1,12 @@
+numpy
+scipy
+matplotlib
+pandas
+memory_profiler
+jupyter 
+jupyter-black
+pygam
+transformers
+opentsne
+rpy
+torch
