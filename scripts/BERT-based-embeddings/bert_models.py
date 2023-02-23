@@ -29,6 +29,7 @@ checkpoint = "dmis-lab/biobert-v1.1"
 #"microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext"
 #"allenai/scibert_scivocab_uncased" 
 #"bert-base-uncased"
+"allenai/specter"
 
 print("Model: {}".format(checkpoint))  
 
