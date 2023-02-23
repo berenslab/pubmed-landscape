@@ -81,12 +81,8 @@ et = time.time()
 elapsed_time = et - st
 print('Execution time:', elapsed_time, 'seconds')
 
-# corresponding labels
 true_labels = np.array(df.Colors)
 selected_embeddings = embedding_av[df.Colors.index]
-
-# corresponding labels
-true_labels = np.array(df.Colors)
 
 # splitting arrays or matrices into train and test subsets
 X_train, X_test, y_train, y_test = train_test_split(selected_embeddings, true_labels, test_size=0.01, random_state = random_state)
