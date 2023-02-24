@@ -28,7 +28,7 @@ pip install -e .
 
 Here there is a more detailed description on what you can find in the different notebooks in the `scripts/` folder.
 
-Notebooks:
+Notebooks in `scripts/`:
 - `01-02`: obtain and prepare the data.
 - `03-05`: pipelines to transform the abstracts from raw text to 2D embedding, both BERT-based and TF-IDF ones.
 - `06-08`: metrics calculations (kNN recall, kNN accuracy and isolatedness).
@@ -37,3 +37,8 @@ Notebooks:
 - `11`: analysis of machine learning (Section 2.3 from the paper).
 - `12-14`: analysis of author's gender (Section 2.4 from the paper).
 - `15`: whitening experiment (see Methods, section 4.3).
+
+Notebooks and Python files in `scripts/BERT-based-embeddings/`:
+- `SBERT.py`: computing the SBERT embeddings of the abstracts and the kNN accuracy of the representation.
+- `01-rgm-ls-malteos.ipynb`: computing the SciNCL embeddings of the abstracts and the kNN accuracy of the representation.
+- `bert-models.py`: computing the embeddings of the abstracts and the kNN accuracy for the rest of the BERT-based models (see Table 3, section 4.3).
