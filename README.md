@@ -1,5 +1,5 @@
 # The landscape of biomedical research
-###### Rita González-Márquez, Luca Schmidt, Ben Schmidt, Philipp Berens & Dmitry Kobak
+###### Rita González-Márquez, Luca Schmidt, Benjamin M. Schmidt, Philipp Berens & Dmitry Kobak
 
 In this repository you can find the code associated to the paper "The landscape of biomedical research" (add URL).
 
