@@ -26,7 +26,6 @@ share/python-wheels/
 .installed.cfg
 data
 results/variables
-variables
 scripts/*.ann
 *.egg
 MANIFEST
