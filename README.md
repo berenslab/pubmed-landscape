@@ -12,7 +12,7 @@ The notebooks `01-15` contain the code to reproduce all the experiments and anal
 
 In order to be able to run `01-rgm-data-parse.ipynb`, the dataset needs to be first downloaded into the `data/` directory from https://www.nlm.nih.gov/databases/download/pubmed_medline.html and then unziped. PubMed releases a new snapshot of their database every year; they call it a "baseline". The data used in the paper is the 2020 baseline (download date: 26.01.2021, not available anymore) supplemented with additional files from the 2021 baseline (download date: 27.04.2022, not available anymore). However, any files from the currently available baseline could be used instead. For that the notebook `00-rgm-data-download.ipynb` can be used (it should be noted that the path to the pubmed baseline should be changed accordingly to which baseline you want to download). Also, the FTP connection breaks after downloading several hundreds of files and one needs to reestablish the connection.
 
-As one runs the notebooks, the computed variables and intermediate results will be stored in the `results/variables/` directory. As the dataset and the obtained variables are too large, they are not included in the repository. However, you can find the t-SNE embedding along with some metadata in here: (zenodo URL, add).
+As one runs the notebooks, the computed variables and intermediate results will be stored in the `results/variables/` directory. As the dataset and the obtained variables are too large, they are not included in the repository. However, you can find the t-SNE embedding along with some metadata in here: (https://zenodo.org/record/7695390).
 
 
 ## Installation
