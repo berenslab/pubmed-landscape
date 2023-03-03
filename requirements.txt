@@ -1,6 +1,6 @@
 numpy
 scipy
-matplotlib
+matplotlib != 3.7.0
 pandas
 memory_profiler
 jupyter 
