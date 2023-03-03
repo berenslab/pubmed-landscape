@@ -27,6 +27,7 @@ share/python-wheels/
 data
 results/variables
 scripts/*.ann
+scripts/16-rgm-data-generate-csv.ipynb
 *.egg
 MANIFEST
 
