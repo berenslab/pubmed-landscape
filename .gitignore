@@ -26,6 +26,7 @@ share/python-wheels/
 .installed.cfg
 data
 results/variables
+results/figures/bert-models
 scripts/*.ann
 scripts/16-rgm-data-generate-csv.ipynb
 scripts/BERT-based-embeddings/02-rgm-runtimes-experiment.ipynb
