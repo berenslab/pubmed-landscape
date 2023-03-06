@@ -331,15 +331,18 @@ def import_all_files(path, order_files=False):
 
 
 
-def generate_embeddings(abstracts):
-    '''Generate embeddings using BERT-based model.
-    This function was only tried with malteos model (SciNCL).
+def generate_embeddings(abstracts, tokenizer, model):
+    """Generate embeddings using BERT-based model.
     Code from Luca.
-    
+
     Parameters
     ----------
     abstracts : list
         Abstract texts.
+    tokenizer : transformers.models.bert.tokenization_bert_fast.BertTokenizerFast
+        Tokenizer.
+    model : transformers.models.bert.modeling_bert.BertModel
+        BERT-based model.
         
     Returns
     -------

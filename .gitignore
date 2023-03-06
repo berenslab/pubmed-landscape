@@ -28,6 +28,8 @@ data
 results/variables
 scripts/*.ann
 scripts/16-rgm-data-generate-csv.ipynb
+scripts/BERT-based-embeddings/02-rgm-runtimes-experiment.ipynb
+scripts/BERT-based-embeddings/03-rgm-pipeline-BERT-models.ipynb
 *.egg
 MANIFEST
 
