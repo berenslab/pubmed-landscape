@@ -333,7 +333,7 @@ def import_all_files(path, order_files=False):
 
 def generate_embeddings(abstracts, tokenizer, model, device):
     """Generate embeddings using BERT-based model.
-    Code from Luca.
+    Code from Luca Schmidt.
 
     Parameters
     ----------
