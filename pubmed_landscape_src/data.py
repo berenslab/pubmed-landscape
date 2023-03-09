@@ -343,6 +343,8 @@ def generate_embeddings(abstracts, tokenizer, model, device):
         Tokenizer.
     model : transformers.models.bert.modeling_bert.BertModel
         BERT-based model.
+    device : str, {"cuda", "cpu"}
+        "cuda" if torch.cuda.is_available() else "cpu".
         
     Returns
     -------
