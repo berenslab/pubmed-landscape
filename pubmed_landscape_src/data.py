@@ -331,6 +331,7 @@ def import_all_files(path, order_files=False):
 
 
 
+@torch.no_grad()
 def generate_embeddings(abstracts, tokenizer, model, device):
     """Generate embeddings using BERT-based model.
     Code from Luca Schmidt.
@@ -363,9 +364,6 @@ def generate_embeddings(abstracts, tokenizer, model, device):
         return_tensors="pt",
         max_length=512,
     ).to(device)
-
-    # set device
-    model = model.to(device)
 
     # inference
     outputs = model(**inputs)[0].cpu().detach() 
