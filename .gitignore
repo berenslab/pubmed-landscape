@@ -29,9 +29,10 @@ results/variables
 results/figures/bert-models
 scripts/*.ann
 scripts/16-rgm-data-generate-csv.ipynb
-scripts/BERT-based-embeddings/02-rgm-runtimes-experiment.ipynb
-scripts/BERT-based-embeddings/03-rgm-pipeline-BERT-models.ipynb
-scripts/BERT-based-embeddings/04-rgm-tokenizer-experiment.ipynb
+scripts/BERT-based-embeddings/07-rgm-runtimes-experiment.ipynb
+scripts/BERT-based-embeddings/08-rgm-tokenizer-experiment.ipynb
+scripts/BERT-based-embeddings/09-rgm-sanity-check-PubMedBERT.ipynb
+scripts/BERT-based-embeddings/sBERT.py
 *.egg
 MANIFEST
 

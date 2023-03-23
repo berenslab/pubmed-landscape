@@ -54,7 +54,8 @@ def knn_accuracy(Zs, colors, k=10, subset_size=500, rs=42):
 def knn_accuracy_ls(selected_embeddings, true_labels, k = 10, rs=42):
     """Calculates kNN accuracy.
     In principle should do the same as the function above, but the way of selecting the train and test set is differently.
-    Code from Luca.
+    Actually, if you use the same random seed as in the function above it gives you the same result (at least for the default parameters of train_test_split sklearn version 1.0.2).
+    Code from Luca. 
     
     Parameters
     ----------
