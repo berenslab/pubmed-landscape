@@ -1,7 +1,7 @@
 # The landscape of biomedical research
 ###### Rita González-Márquez, Luca Schmidt, Benjamin M. Schmidt, Philipp Berens & Dmitry Kobak
 
-In this repository you can find the code associated to the paper "The landscape of biomedical research" (add URL).
+In this repository you can find the code associated to the paper "The landscape of biomedical research" (https://www.biorxiv.org/content/10.1101/2023.04.10.536208v1).
 
 ![alt text](https://github.com/berenslab/pubmed-landscape/blob/main/results/figures/fig_1_general_embedding.png?raw=true)
 
