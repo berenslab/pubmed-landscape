@@ -38,7 +38,11 @@ Notebooks in `scripts/`:
 - `12-14`: analysis of author's gender (Section 2.4 from the paper).
 - `15`: whitening experiment (see Methods, section 4.3).
 
-Notebooks and Python files in `scripts/BERT-based-embeddings/`:
-- `SBERT.py`: computing the SBERT embeddings of the abstracts and the kNN accuracy of the representation.
-- `01-rgm-ls-malteos.ipynb`: computing the SciNCL embeddings of the abstracts and the kNN accuracy of the representation.
-- `bert-models.py`: computing the embeddings of the abstracts and the kNN accuracy for the rest of the BERT-based models (see Table 3, section 4.3).
+Notebooks and Python files in `scripts/BERT-based-embeddings/` (Table 3, section 4.3 of the paper):
+- `01-rgm-ls-malteos.ipynb`: compute the SciNCL embeddings of the abstracts and the kNN accuracy of the representation.
+- `02-rgm-ls-SBERT.ipynb`: compute the SBERT embeddings of the abstracts and the kNN accuracy of the representation.
+- `03-rgm-ls-PubMedBERT.ipynb`: compute the PubMedBERT embeddings of the abstracts and the kNN accuracy of the representation.
+- `04-rgm-ls-BERT.ipynb`: compute the BERT embeddings of the abstracts and the kNN accuracy of the representation.
+- `05-rgm-pipeline-TFIDF-1M.ipynb`: compute the TF-IDF rerpesentation and its kNN accuracy of the corresponding 1M subset used for the BERT-based models comparison.
+- `06-rgm-pipeline-BERT-models.ipynb`: compute the t-SNE embedding of the different BERT-based models representations.
+- `bert-models.py`: compute the embeddings of the abstracts and the kNN accuracy for the rest of the BERT-based models.
