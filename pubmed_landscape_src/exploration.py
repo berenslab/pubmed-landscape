@@ -223,7 +223,6 @@ def find_mask_words(abstracts, word, verbose=True):
         print(f"Number of papers with uncapitalized word '{word}': ", len(np.where(indexes1!=-1)[0]))
         print(f"Number of papers with capitalized word '{word}': ", len(np.where(indexes2!=-1)[0]))
         print(f"Number of total papers with word '{word}': ", len(np.where(mask)[0]))
-
     
     return mask
 

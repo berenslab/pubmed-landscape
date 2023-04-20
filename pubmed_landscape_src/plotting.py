@@ -1057,11 +1057,13 @@ def plot_tsne_genders(tsne, colors, x_lim, y_lim, ax=None, plot_type=None, legen
         
         
         
-def plot_tsne_word(all_abstracts, word, tsne, x_lim, y_lim, ax=None, plot_type=None, title_on=False, axis_on = False, verbose=True):
+def plot_tsne_word(all_abstracts, word, tsne, x_lim, y_lim, ax=None, plot_type=None, title_on=False, axis_on = False, legend_on = False, verbose=True):
     """Plots t-SNE embedding with points having one given word in their abstract highlighted.
     It plots all points in grey, and papers that have that specific word/phrase in their abstract in black. 
     If more than one word is given, each of them will be plotted using colors from tab10 color palette.
     Take into account that if this happens, points will be plotted on top of each other instead of shuffled, so the amount of papers may be missleading.
+    
+    CURRENTLY NOT WORKING WHEN PASSING LIST OF WORDS INSTEAD OF SINGLE STR!
     
     Parameters
     ----------
@@ -1157,8 +1159,8 @@ def plot_tsne_word(all_abstracts, word, tsne, x_lim, y_lim, ax=None, plot_type=N
             ax.scatter(subregion[:,0],subregion[:,1], c=np.matrix(plt.cm.tab10(i)), s=s_color,alpha=alpha_color, marker='.', linewidths=0, rasterized=True)
             ax.scatter([],[], c=np.matrix(plt.cm.tab10(i)), s=10, alpha=1, label='"'+elem+'"')
             
-            
-        ax.legend()
+        if legend_on == True:
+            ax.legend()
     
     ax.axis('equal')
     ax.set_xlim(x_lim[0], x_lim[1])
@@ -1171,15 +1173,15 @@ def plot_tsne_word(all_abstracts, word, tsne, x_lim, y_lim, ax=None, plot_type=N
         
 
 def plot_tsne_zoom(tsne, mask, x_lim, y_lim, ax=None, plot_type=None, title_on=False, axis_on=False, verbose=True):
-    """Plots faster zoomed regions of t-SNE embedding with points from one mask.
-    It plots all points in grey, and papers from the mask in black.
+    """Plots faster zoomed regions of t-SNE embedding.
+    It plots all points in grey. One can pass an additional mask and it will color papers from the mask in black.
 
     Parameters
     ----------
     tsne: array-like
         t-SNE coordinates.
-    mask : array of bool
-        Mask for the colored points.
+    mask : array of bool or None
+        If given, colors points from that mask in black on top of the grey points.
     x_lim : tuple (left, right)
         Limits of the x-axis.
     y_lim : tuple (bottom, top)
@@ -1218,13 +1220,7 @@ def plot_tsne_zoom(tsne, mask, x_lim, y_lim, ax=None, plot_type=None, title_on=F
     if ax is None:
         fig, ax = plt.subplots()
 
-    mask_colors = (
-        (tsne[:, 0] < x_lim[1])
-        & (tsne[:, 0] > x_lim[0])
-        & (tsne[:, 1] < y_lim[1])
-        & (tsne[:, 1] > y_lim[0])
-        & mask
-    )
+
     mask_grey = (
         (tsne[:, 0] < x_lim[1])
         & (tsne[:, 0] > x_lim[0])
@@ -1244,17 +1240,27 @@ def plot_tsne_zoom(tsne, mask, x_lim, y_lim, ax=None, plot_type=None, title_on=F
         ec="None",
         rasterized=True,
     )
-    ax.scatter(
-        tsne[mask_colors, 0],
-        tsne[mask_colors, 1],
-        s=s_color,
-        c="black",
-        alpha=alpha_color,
-        marker=".",
-        # linewidths=0,
-        ec="None",
-        rasterized=True,
-    )
+    
+    if mask is not None:
+        mask_colors = (
+            (tsne[:, 0] < x_lim[1])
+            & (tsne[:, 0] > x_lim[0])
+            & (tsne[:, 1] < y_lim[1])
+            & (tsne[:, 1] > y_lim[0])
+            & mask
+        )
+
+        ax.scatter(
+            tsne[mask_colors, 0],
+            tsne[mask_colors, 1],
+            s=s_color,
+            c="black",
+            alpha=alpha_color,
+            marker=".",
+            # linewidths=0,
+            ec="None",
+            rasterized=True,
+        )
 
     ax.axis("equal")
     ax.set_xlim(x_lim[0], x_lim[1])
