@@ -1172,7 +1172,7 @@ def plot_tsne_word(all_abstracts, word, tsne, x_lim, y_lim, ax=None, plot_type=N
         
         
 
-def plot_tsne_zoom(tsne, mask, x_lim, y_lim, ax=None, plot_type=None, title_on=False, axis_on=False, verbose=True):
+def plot_tsne_zoom(tsne, mask, x_lim, y_lim, ax=None, plot_type=None, title_on=False, axis_on=False, grid_on = False, verbose=True):
     """Plots faster zoomed regions of t-SNE embedding.
     It plots all points in grey. One can pass an additional mask and it will color papers from the mask in black.
 
@@ -1193,7 +1193,9 @@ def plot_tsne_zoom(tsne, mask, x_lim, y_lim, ax=None, plot_type=None, title_on=F
     title_on : bool, default=False
         If True, adds the word being queried as title to the figure.
     axis_on : bool, default=False
-        If True, axis and grid are shown in plot.
+        If True, axis and grid is shown in plot.
+    grids_on : bool, default=False
+        If True, grid is shown in plot.
     verbose : bool, default=True
         If True, prints the number of papers with that certain word and its variations in it .
     """
@@ -1268,5 +1270,6 @@ def plot_tsne_zoom(tsne, mask, x_lim, y_lim, ax=None, plot_type=None, title_on=F
 
     if axis_on == False:
         ax.axis("off")
-    else:
+        
+    if grid_on == True:
         ax.grid()
