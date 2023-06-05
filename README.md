@@ -1,14 +1,14 @@
 # The landscape of biomedical research
 ###### Rita González-Márquez, Luca Schmidt, Benjamin M. Schmidt, Philipp Berens & Dmitry Kobak
 
-In this repository you can find the code associated to the paper "The landscape of biomedical research" (https://www.biorxiv.org/content/10.1101/2023.04.10.536208v1).
+In this repository you can find the code associated to the paper "The landscape of biomedical research" (https://www.biorxiv.org/content/10.1101/2023.04.10.536208v2).
 
 ![alt text](https://github.com/berenslab/pubmed-landscape/blob/main/results/figures/fig_1_general_embedding.png?raw=true)
 
 
 ## How to use this repository
 
-The notebooks `01-15` contain the code to reproduce all the experiments and analyses performed in the paper. In particular, the notebooks `02-03` contain all the steps for generating the 2D embedding from raw text. The notebooks `01-11` in the `scripts/figure-scripts/` folder contain the code to generate the final figures included in the paper. All figures generated with the notebooks will be stored in the `results/figures/` folder. The notebooks `01-06` in the `scripts/BERT-based-embeddings/` folder contain the comparisons between different BERT-based models and TF-IDF in a subset of the data $(n=1$ M).
+The notebooks `01-16` contain the code to reproduce all the experiments and analyses performed in the paper. In particular, the notebooks `02-03` contain all the steps for generating the 2D embedding from raw text. The notebooks `01-14` in the `scripts/figure-scripts/` folder contain the code to generate the final figures included in the paper. All figures generated with the notebooks will be stored in the `results/figures/` folder. The notebooks `01-06` in the `scripts/BERT-based-embeddings/` folder contain the comparisons between different BERT-based models and TF-IDF in a subset of the data $(n=1$ M).
 
 In order to be able to run `01-rgm-data-parse.ipynb`, the dataset needs to be first downloaded into the `data/` directory from https://www.nlm.nih.gov/databases/download/pubmed_medline.html and then unziped. PubMed releases a new snapshot of their database every year; they call it a "baseline". The data used in the paper is the 2020 baseline (download date: 26.01.2021, not available anymore) supplemented with additional files from the 2021 baseline (download date: 27.04.2022, not available anymore). However, any files from the currently available baseline could be used instead. For that the notebook `00-rgm-data-download.ipynb` can be used (it should be noted that the path to the pubmed baseline should be changed accordingly to which baseline you want to download). Also, the FTP connection breaks after downloading several hundreds of files and one needs to reestablish the connection.
 
@@ -36,7 +36,8 @@ Notebooks in `scripts/`:
 - `10`: analysis of neurscience (Section 2.2 from the paper).
 - `11`: analysis of machine learning (Section 2.3 from the paper).
 - `12-14`: analysis of author's gender (Section 2.4 from the paper).
-- `15`: whitening experiment (see Methods, section 4.3).
+- `15`: analysis of retracted papers (Section 2.5 from the paper).
+- `16`: whitening experiment (see Methods, section 4.3).
 
 Notebooks and Python files in `scripts/BERT-based-embeddings/` (Table 3, section 4.3 of the paper):
 - `01-rgm-ls-malteos.ipynb`: compute the SciNCL embeddings of the abstracts and the kNN accuracy of the representation.
