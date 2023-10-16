@@ -1,8 +1,7 @@
 import numpy as np
-import pandas as pd
+
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import NearestNeighbors
-from sklearn.metrics import pairwise_distances
 from sklearn.metrics import mean_squared_error
 from sklearn.dummy import DummyClassifier
 from sklearn.model_selection import train_test_split

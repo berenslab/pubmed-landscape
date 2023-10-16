@@ -858,6 +858,7 @@ def plot_tsne_colors(tsne, colors, x_lim, y_lim, ax=None, plot_type=None, axis_o
         #alpha_grey = 0.2
         s_color = 0.2
         alpha_color = 0.5
+        
     
     ax.scatter(tsne[:,0][colors=='lightgrey'], tsne[:,1][colors=='lightgrey'],
                s=s_grey, alpha=alpha_grey, c='lightgrey', marker= '.', linewidths=0, ec='None', rasterized=True) 
@@ -872,6 +873,7 @@ def plot_tsne_colors(tsne, colors, x_lim, y_lim, ax=None, plot_type=None, axis_o
         
     ax.set_xlim(x_lim[0], x_lim[1])
     ax.set_ylim(y_lim[0], y_lim[1])
+    
     if axis_on == False:
         ax.axis('off')
         
@@ -1003,14 +1005,16 @@ def plot_tsne_genders(tsne, colors, x_lim, y_lim, ax=None, plot_type=None, legen
     
     s = 0.5
     alpha=0.2
+    legend_fontsize= 10
 
     if plot_type == 'subplot_2':
         s = 0.2
         alpha=0.2
         
     if plot_type == 'subplot_3':
-        s=0.1 #0.05 v2
+        s=0.1 
         alpha=0.2
+        legend_fontsize = 5
         
     if plot_type == 'subregion':
         s = 2
@@ -1045,7 +1049,7 @@ def plot_tsne_genders(tsne, colors, x_lim, y_lim, ax=None, plot_type=None, legen
         point3  = ax.scatter([], [], c='black', s=10, alpha=1 , label = 'unknown gender')
         point4  = ax.scatter([], [], c='lightgrey', s=10, alpha=1 , label = 'unknown name')
 
-        ax.legend(handles=[point2, point1, point3, point4], loc = 'lower left', fontsize = 5, frameon=False,
+        ax.legend(handles=[point2, point1, point3, point4], loc = 'lower left', fontsize = legend_fontsize, frameon=False,
                   borderpad = 0.2, handletextpad = 0, handlelength = 1, borderaxespad = 1.5) #-0.2 before
         
     ax.axis('equal')
@@ -1206,7 +1210,9 @@ def plot_tsne_zoom(tsne, mask, x_lim, y_lim, ax=None, plot_type=None, title_on=F
     assert plot_type in [
         None,
         "zoom x2",
-    ], "Not valid `plot_type` value. Choose from [None, 'zoom x2']."
+        "subplot_2",
+        "subplot_3",
+    ], "Not valid `plot_type` value. Choose from [None, 'zoom x2', 'subplot_2', 'subplot_3']."
 
     s_grey = 3
     s_color = 3
@@ -1218,6 +1224,18 @@ def plot_tsne_zoom(tsne, mask, x_lim, y_lim, ax=None, plot_type=None, title_on=F
         s_color = 5
         alpha_grey = 0.5
         alpha_color = 0.7
+    
+    if plot_type=="subplot_2":
+        s_grey = 0.2
+        s_color = 0.2
+        alpha_grey = 0.2
+        alpha_color = 0.5  
+        
+    if plot_type=="subplot_3":
+        s_grey = 0.2
+        s_color = 0.2
+        alpha_grey = 0.2
+        alpha_color = 0.5 
 
     if ax is None:
         fig, ax = plt.subplots()
