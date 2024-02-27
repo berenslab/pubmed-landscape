@@ -2,6 +2,7 @@ import pandas as pd
 import xml.etree.ElementTree as et
 import os
 import torch
+import numpy as np
 
 def xml_import(xml_file):
     """Parses some elements of the metadata in PubMed XML files.
@@ -60,11 +61,15 @@ def xml_import(xml_file):
     into one (due to the assymetry of the date storage, sometimes with <Day>, <Month> and <Year>, other times 
     with <MedlineDate>). If <PubDate> contains no further childs, it will print ' '.
     
-    - First author first name: It parses the <ForeName> of the first <Author> listed in <Authorlist>. Note that sometimes the metadata is not perfect inside the tag there is the complete name, including surnames. If there is no tag <ForeName>, 'no tag' will be appended. Note for the future: Maybe this is misses some names directly listed in the tag <Author>, maybe an approach similar to what I do for abstracts would be better, where everything under the <Author> tag is parsed. In that case we would also have surnames, but that can be cleaned after.
+    - First author first name: It parses the <ForeName> of the first <Author> listed in <Authorlist>. Note that sometimes the metadata is not perfect inside the tag there is the complete name, including surnames. If there is no tag <ForeName>, 'no tag' will be appended. Note for the future: Maybe this is misses some names directly listed in the tag <Author>, maybe an approach similar to what I do for abstracts would be better, where everything under the <Author> tag is parsed. In that case we would also have surnames, but that can be cleaned after. Update: actually not really because affiliation is also saved under <Author>. It is fine the way it is.
     
     - Last authors first name: It parses the <ForeName> of the last <Author> listed in <Authorlist>. Note that sometimes the metadata is not perfect inside the tag there is the complete name, including surnames. If there is no tag <ForeName>, 'no tag' will be appended. Note for the future: maybe same problem as in first authors.
     
     - ISSN (stored in <ISSN>): If there is no tag <ISSN>, it will add 'no tag'. If <ISSN> contains no text, it will add '' (empty string). 
+
+    - Affiliation first author: 
+
+    - Affiliation last author:
 
     """
     
@@ -217,7 +222,7 @@ def xml_import(xml_file):
                             tag=author.find('ForeName')
 
                             if tag is None:
-                                ros.append(['no tag'])
+                                ros.append("")
                             else:
                                 res=[]
                                 if not tag.text:
@@ -245,10 +250,7 @@ def xml_import(xml_file):
                             for elem in author.iter('Author'):
                                 tag=elem.find('ForeName')
                                 if tag is None:
-                                    res.append(['no tag'])
-                                    #for the next time, this is bad because then the element is a list and not a string
-                                    #it should be:
-                                    # res.append('no tag')  
+                                    res.append("") 
                                 else:
                                     if not tag.text:
                                         res.append('')
@@ -280,6 +282,66 @@ def xml_import(xml_file):
     ros=[' '.join(ele) for ele in ros]
     dicc['ISSN']=ros
 
+
+    # Affiliation of the first author 
+    ros = []
+    for child1 in xroot:
+        for child2 in child1:
+            for child3 in child2:
+                for child4 in child3.iter("Article"):
+                    authorlist = child4.find("AuthorList")
+                    if authorlist is None:
+                        ros.append("")
+                    else:
+                        for elem in child4.iter("AuthorList"):
+                            author = elem.find("Author")
+                            affil = author.find("AffiliationInfo")
+                            if affil is None:
+                                ros.append("")  
+                            else:
+                                tag = affil.find("Affiliation")
+                                if tag is None:
+                                    ros.append("")  
+                                else:
+                                    res = []
+                                    if not tag.text:
+                                        res.append("")
+                                    else:
+                                        res.append(tag.text)
+                                    ros.append(res)
+    
+    ros = [" ".join(ele) for ele in ros]
+    dicc['AffiliationFirstAuthor']=ros
+
+    
+    # Affiliation of the last author
+    ros = []
+    for child1 in xroot:
+        for child2 in child1:
+            for child3 in child2:
+                for child4 in child3.iter("Article"):
+                    authorlist = child4.find("AuthorList")
+                    if authorlist is None:
+                        ros.append("")
+                    else:
+                        for author in child4.iter("AuthorList"):
+                            res = []
+                            for elem in author.iter("Author"):
+                                affil = elem.find("AffiliationInfo")
+                                if affil is None:
+                                    res.append("")
+                                else:
+                                    tag = affil.find("Affiliation")
+                                    if tag is None:
+                                        res.append("")
+                                    else:
+                                        if not tag.text:
+                                            res.append("")
+                                        else:
+                                            res.append(tag.text)
+                            ros.append(res[-1])
+                            
+    dicc['AffiliationLastAuthor']=ros
     
     out=pd.DataFrame.from_dict(dicc)
     return out, dicc
@@ -313,6 +375,7 @@ def import_all_files(path, order_files=False):
 
     name_files_array=np.array(name_files)
     name_xml_files=name_files_array[len_filenames==17]
+    name_xml_files.sort()
     
     # import
     frame_all_df=[]
@@ -374,3 +437,84 @@ def generate_embeddings(abstracts, tokenizer, model, device):
 
     
     return embedding_cls, embedding_sep, embedding_av 
+
+def mean_pooling(token_embeds, attention_mask):
+    """Returns [AVG] token.
+    Returns average embedding of the embeddings of all tokens of a corpus ([AVG]).
+
+    Parameters
+    ----------
+    token_embeds : torch of shape (n_documents, 512, 768)
+        First element of model_output contains all token embeddings (model_output[0])
+    attention_mask : inputs["attention_mask"], inputs being the output of the tokenizer
+
+    """
+    input_mask_expanded = (
+        attention_mask.unsqueeze(-1).expand(token_embeds.size()).float()
+    )
+    sum_embeddings = torch.sum(token_embeds * input_mask_expanded, 1)
+    sum_mask = torch.clamp(input_mask_expanded.sum(1), min=1e-9)
+    return sum_embeddings / sum_mask
+
+
+def sep_pooling(token_embeds, attention_mask):
+    """Returns [SEP] token
+    Returns [SEP] token from all the embeddings of all tokens of a corpus.
+
+    Parameters
+    ----------
+    token_embeds : torch of shape (n_documents, 512, 768)
+        First element of model_output contains all token embeddings (model_output[0])
+    attention_mask : inputs["attention_mask"], inputs being the output of the tokenizer
+
+    """
+    ix = attention_mask.sum(1) - 1
+    ix0 = torch.arange(attention_mask.size(0))
+    return token_embeds[ix0, ix, :]
+
+
+@torch.no_grad()
+def generate_embeddings_batches(abstracts, tokenizer, model, device):
+    """Generate embeddings using BERT-based model.
+
+    Parameters
+    ----------
+    abstracts : list, this has to be a list not sure if array works but pandas do not work
+        Abstract texts.
+    tokenizer : transformers.models.bert.tokenization_bert_fast.BertTokenizerFast
+        Tokenizer.
+    model : transformers.models.bert.modeling_bert.BertModel
+        BERT-based model.
+    device : str, {"cuda", "cpu"}
+        "cuda" if torch.cuda.is_available() else "cpu".
+
+    Returns
+    -------
+    embedding_cls : ndarray
+        [CLS] tokens of the abstracts.
+    embedding_sep : ndarray
+        [SEP] tokens of the abstracts.
+    embedding_av : ndarray
+        Average of tokens of the abstracts.
+    """
+    # preprocess the input
+    inputs = tokenizer(
+        abstracts,
+        padding=True,
+        truncation=True,
+        return_tensors="pt",
+        max_length=512,
+    ).to(device)
+
+    with torch.no_grad():
+        model.eval()
+        out = model(**inputs)
+        token_embeds = out[0]  # get the last hidden state
+        av = mean_pooling(token_embeds, inputs["attention_mask"])
+        sep = sep_pooling(token_embeds, inputs["attention_mask"])
+        cls = token_embeds[:, 0, :]
+        embedding_av = av.detach().cpu().numpy()
+        embedding_sep = sep.detach().cpu().numpy()
+        embedding_cls = cls.detach().cpu().numpy()
+
+    return embedding_cls, embedding_sep, embedding_av

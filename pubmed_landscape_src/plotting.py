@@ -819,10 +819,15 @@ def plot_tsne_colors(tsne, colors, x_lim, y_lim, ax=None, plot_type=None, axis_o
     if ax is None:
         fig, ax = plt.subplots()
     
-    s_grey = 0.1
+    # s_grey = 0.1
+    # s_color = 0.5
+    # alpha_grey = 0.2
+    # alpha_color = 0.2
+    
+    s_grey = 0.5
     s_color = 0.5
-    alpha_grey = 0.2
-    alpha_color = 0.2
+    alpha_grey = 0.6
+    alpha_color = 0.7
     
     if plot_type=='subplot_2':
         s_grey = 0.2
@@ -880,7 +885,7 @@ def plot_tsne_colors(tsne, colors, x_lim, y_lim, ax=None, plot_type=None, axis_o
         
         
         
-def plot_tsne_years(tsne, colors, x_lim, y_lim, ax=None, fontsize=7, plot_type=None, colorbar=True, colorbar_type=None, axis_on=False, rs = 42):
+def plot_tsne_years(tsne, colors, x_lim, y_lim, ax=None, fontsize=7, plot_type=None, colorbar=True, colorbar_type=None, axis_on=False, rs = 42, top_year="2021"):
     """Plot t-SNE embedding with colors (by years).
     
     Parameters
@@ -912,6 +917,7 @@ def plot_tsne_years(tsne, colors, x_lim, y_lim, ax=None, fontsize=7, plot_type=N
     
     assert x_lim[0] < x_lim[1], "xlim values are in the wrong order."
     assert y_lim[0] < y_lim[1], "ylim values are in the wrong order."
+    assert type(top_year) == str, "top_year should be a string."
     
     assert plot_type in [None, 'subplot', 'subregion', 'test'], "Not valid `plot_type` value. Choose from [None, 'subplot', 'subregion', 'test']."
     assert colorbar_type in [None, 'neuroscience'], "Not valid `colorbar_type` value. Choose from [None, 'neuroscience']."
@@ -963,7 +969,7 @@ def plot_tsne_years(tsne, colors, x_lim, y_lim, ax=None, fontsize=7, plot_type=N
 
         cbar.set_alpha(1)
         cbar.ax.get_yaxis().set_ticks([0,1])
-        cbar.ax.get_yaxis().set_ticklabels(['1970','2021'])
+        cbar.ax.get_yaxis().set_ticklabels(['1970', top_year])
         cbar.ax.tick_params(labelsize=fontsize)
         
         
