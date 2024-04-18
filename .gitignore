@@ -49,6 +49,7 @@ scripts/20-rgm-figure-top10-genes.ipynb
 scripts/pmids.txt
 scripts/2024-baseline/19.2-rgm-data-generate-csv.ipynb
 scripts/2024-baseline/04-rgm-analysis-affiliations-LOCAL.ipynb
+scripts/2024-baseline/20-rgm-analysis-paper-mill.ipynb
 *.egg
 MANIFEST
 
